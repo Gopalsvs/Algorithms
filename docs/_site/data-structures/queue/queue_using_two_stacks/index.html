@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Queue using two Stacks</title>
+    <link rel="shortcut icon" href="http://localhost:4000/assets/logo.ico" />
+    <link rel="stylesheet" href="http://localhost:4000/css/posts.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/vs2015.min.css" >
+    <!-- <link rel="stylesheet" href="/path/to/styles/default.css"> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+
+</head>
+
+
+
+<body>
+        <div class="heading">
+        <span class="title">Queue using two Stacks</span>
+        <br>
+    </div>
+
+    <div class="content">
+        <h1>How ?</h1>
+        <br>
+        <img src="http://localhost:4000/assets/queue_using_two_stacks.png" class="banner">
+
+        <p>
+            To create a queue by only using stacks, you will require two stack data strutures (Stack1 and Stack2 ).
+            Where enqueue and dequeue are defined as:<br />
+            <b>Enqueue(x) :</b> Push <b>x</b> into stack1 <br />
+            <b>Dequeue() &ensp;:</b> If stack2 is empty, then we pop the entire contents of stack1 and push it into stack2. Now
+            simply pop from &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;stack2 and return the result.<br />
+            If you are thinking Dequeue() function is costlier than normal queue's dequeue implementation, than you are wrong.
+            The time complexity of Dequeue() is not <b>O(n)</b>. <a>Amortized Complexity</a> is still <b>O(1)</b> for Enqueue
+            as well as Dequeue. This implementation of queue is <b>not</b> inefficient compared to normal queue implementation.
+
+
+        </p>
+
+        <h1>Implementation</h1>
+        <pre><code style="border-radius: 25px;" id="code">
+            // Program to implement a queue using two stacks
+            #include&lt;stdio.h>
+            #include&lt;stdlib.h>
+
+            // structure of a stack node
+            struct sNode
+            {
+                int data;
+                struct sNode *next;
+                int min;
+            };
+
+            // structure of queue having two stacks
+            struct queue
+            {
+                struct sNode *stack1;
+                struct sNode *stack2;
+            };
+
+            // Function to enqueue an item to queue
+            void enQueue(struct queue *q, int x)
+            {
+                push(&q->stack1, x);
+            }
+
+            // Function to dequeue an item from queue
+            int deQueue(struct queue *q)
+            {
+                int x;
+                // If both stacks are empty then error
+                if(q->stack1 == NULL && q->stack2 == NULL)
+                {
+                    printf("Q is empty");
+                    getchar();
+                    exit(0);
+                }
+
+                // Move elements from satck1 to stack 2 only if stack2 is empty
+                if(q->stack2 == NULL)
+                {
+                    while(q->stack1 != NULL)
+                    {
+                        x = pop(&q->stack1);
+                        push(&q->stack2, x);
+
+                    }
+                }
+
+                x = pop(&q->stack2);
+                return x;
+            }
+
+            // Function to push an item to stack
+            void push(struct sNode** top_ref, int new_data)
+            {
+                struct sNode* new_node = (struct sNode*) malloc(sizeof(struct sNode));
+                if(new_node == NULL)
+                {
+                    printf("Stack overflow \n");
+                    getchar();
+                    exit(0);
+
+                }
+                if((*top_ref)==NULL)
+                {
+                    new_node->min=new_data;
+                }
+                else
+                {
+                    if((*top_ref)->min > new_data)
+                        new_node->min=new_data;
+                    else
+                        new_node->min=(*top_ref)->min;
+                }
+                new_node->data = new_data;
+                new_node->next = (*top_ref);
+                (*top_ref) = new_node;
+            }
+
+            //Function to pop an item from stack
+            int pop(struct sNode** top_ref)
+            {
+                int res;
+                struct sNode *top;
+
+                //If stack is empty then error
+                if(*top_ref == NULL)
+                {
+                    printf("Stack overflow \n");
+                    getchar();
+                    exit(0);
+
+                }
+                else
+                {
+                    top = *top_ref;
+                    res = top->data;
+                    *top_ref = top->next;
+                    free(top);
+                    return res;
+
+                }
+            }
+
+            int get_Min(struct queue *q)
+            {
+                if(q->stack1==NULL && q->stack2==NULL)
+                    return -1;
+                if(q->stack1==NULL)
+                {
+                    return q->stack2->min;
+                }
+                else if(q->stack2==NULL)
+                {
+                    return q->stack1->min;
+                }
+                else
+                {
+                    if(q->stack1->min > q->stack2->min)
+                        return q->stack2->min;
+                    else
+                        return q->stack1->min;
+                }
+            }
+
+            int main()
+            {
+                struct queue *q = (struct queue*)malloc(sizeof(struct queue));
+                q->stack1 = NULL;
+                q->stack2 = NULL;
+                enQueue(q, 2);
+                enQueue(q, 1);
+                printf("min = %d\n",get_Min(q));
+                enQueue(q, 0);
+                printf("min = %d\n",get_Min(q));
+
+                printf("%d ", deQueue(q));
+                printf("%d ", deQueue(q));
+                printf("min = %d\n",get_Min(q));
+                printf("%d ", deQueue(q));
+
+            }
+
+        </pre></code>
+
+        <!-- IDE ======================================================================================================== -->
+        <script>
+            SEC_HTTPS = true;
+            SEC_BASE = "compilers.widgets.sphere-engine.com";
+            (function(d, s, id){ SEC = window.SEC || (window.SEC = []);
+              var js, fjs = d.getElementsByTagName(s)[0];
+              if (d.getElementById(id)) return; js = d.createElement(s); js.id = id;
+              js.src = (SEC_HTTPS ? "https" : "http") + "://" + SEC_BASE + "/static/sdk/sdk.js";
+              fjs.parentNode.insertBefore(js, fjs);
+            }(document, "script", "sphere-engine-compilers-jssdk"));
+            SEC.ready=function(e){"loading"!=document.readyState&&"interactive"!=document.readyState?e():window.addEventListener("load",e)};
+        </script>
+        <!-- <button onclick="runIDE();" class="runIDE">Run On IDE</button> -->
+        <a data-title="Awesome Button" onclick="runIDE();" class="runIDE" >Run On IDE</a>
+        <style>
+            .runIDE{
+                background: linear-gradient(135deg, #6e8efb, #a777e3);
+                border-radius: 4px;
+                display: inline-block;
+                padding: 1em 5em;
+                cursor: pointer;
+                user-select: none;
+                color: white;
+                font-family: "Comic Sans MS", cursive, sans-serif;
+            }
+        </style>
+
+        <div style="height: 500px; width: 60em; display: none;" id="runIde">
+            <div data-id="sec-widget" data-widget="1ff6ad793b52a617ca440adb76c34533"></div>
+            <script>
+                SEC.ready(function() {
+                    var sourceCode = document.getElementById("code").innerText;
+                    var SECWidget = SEC.widget("sec-widget");
+                    SECWidget.loadCode(11, sourceCode, "");
+                });
+            </script>
+        </div>
+        <script>
+            function runIDE(){
+                var x = document.getElementById("runIde");
+                if (x.style.display === "none") {
+                    x.style.display = "block";
+                } else {
+                    x.style.display = "none";
+                }
+            }
+        </script>
+        <br />
+        <h1>Use</h1>
+        <p>
+            You would be thinking how is queue created using two stacks better than normal Implementation of queue, and you
+            are right. In practical usage it is not efficient and approporiate to use queue implementation by two Stacks
+            but it is very useful when you are implementing system in constrained enviroment that weren't designed for it.
+            It is also a good brain exercise to come up with an alogrithm to create a queue using only stacks (Which is one of
+            the reason beginners are given this problem) .
+        </p>
+
+
+
+    </div>
+
+</body>
+
+<script>hljs.initHighlightingOnLoad();</script>
+
+</html>

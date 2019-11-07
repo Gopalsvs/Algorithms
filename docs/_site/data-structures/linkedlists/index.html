@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Linked List</title>
+    <link rel="shortcut icon" href="http://localhost:4000/assets/logo.ico" />
+    <link rel="stylesheet" href="http://localhost:4000/css/posts.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/vs2015.min.css" >
+    <!-- <link rel="stylesheet" href="/path/to/styles/default.css"> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+
+</head>
+
+
+
+<body>
+        <div class="heading">
+        <span class="title">Linked List</span>
+        <br>
+    </div>
+
+    <div class="content">
+        <h1>What is linkedlist ?</h1>
+        <br>
+        <img src="http://localhost:4000/assets/linkedlist/Linkedlist.png" class="banner">
+
+        <p>
+            Linked List is a sequence of data structures, which are connected together via links. Each struct consists of two parts,
+            data part which stores the relevant data and link/pointer that stores the refrence to the next data block. Linked list
+            is second most used data strucutre after array.<br />
+            You might be thinking if it is just list of data, we already have arrays for that so what is the point of using a
+            linked list, Right? <br />
+            Well one disadvantage of using arrays to store data is that arrays are static strcutures and
+            therefore cannot be easily extended or reduced to fit the data set. Arrays are also expensive to maintain new
+            insertions and deletions.<br />
+            Second major disadvantage is that, memory allocation of array is uniform, i.e. knowing address of any one of the
+            memory block, you can get address of any other memory block of the array. This property helps you to get the
+            required data from an array in <b>O(1)</b> but restricts the max size of an array to an order of
+            <b>O(<i>10</i><sup>6</sup>)</b>. Whereas memory allocation in linkedlist is dynamic, this means that each data
+            block has a randomly allocated memory location. Due to this property of linkedlist, there are no maximum
+            size constraints. This is very useful when you are working with large amount of data that has to be handled.
+
+        </p>
+
+        <h1>Linked List Functionalities</h1>
+        <ol>
+            <h2><li>Appending to Linkedlist</li></h2>
+            <img src="http://localhost:4000/assets/linkedlist/appending.gif"  style="width: 95%; height: 500px;">
+            <h2><li>Inserting to Linkedlist</li></h2>
+            <img src="http://localhost:4000/assets/linkedlist/inserting.gif"  style="width: 95%; height: 500px;">
+            <h2><li>Deleting to Linkedlist</li></h2>
+            <img src="http://localhost:4000/assets/linkedlist/deleting.gif"  style="width: 95%; height: 500px;">
+        </ol>
+
+        <h1>Implemetation</h1>
+
+        <pre><code style="border-radius: 25px;" id="code">
+
+        #include&lt;stdio.h&gt;
+        #include&lt;stdlib.h&gt;
+
+        struct node{
+        	int data;
+        	struct node* next;
+        };
+
+        void addatbegin(struct node **head,int key)
+        {
+        	struct node *temp;
+        	temp = (struct node *)malloc(sizeof(struct node));
+        	temp->data = key;
+        	temp->next = (*head);
+        	(*head) = temp;
+        }
+
+        void addatend(struct node *head,int key)
+        {
+        	struct node *temp;
+        	temp = (struct node *)malloc(sizeof(struct node));
+        	temp->data = key;
+        	while(head->next != NULL)
+        		head = head->next;
+        	head->next = temp;
+        	temp->next = NULL;
+        }
+
+        void addatmiddle(struct node *head,int key,int middata)
+        {
+        	struct node *temp,*pev;
+        	temp = (struct node *)malloc(sizeof(struct node));
+        	temp->data = key;
+        	while(head->data != middata)
+        		head = head->next;
+        	temp->next = head->next;
+        	head->next = temp;
+        }
+
+        void deleteatbeg(struct node **head)
+        {
+        	(*head) = (*head)->next;
+        }
+
+        void deleteatend(struct node *head)
+        {
+        	while((head->next)->next != NULL)
+        		head = head->next;
+        	head->next = NULL;
+        }
+
+        void deleteatmid(struct node *head,int key)
+        {
+        	struct node *temp;
+        	for(int i=0;i&lt;key;i++)
+        	{
+        		temp = head;
+        		head = head->next;
+        	}
+        	temp->next = head->next;
+        }
+
+        void print(struct node* head)
+        {
+            while(head != NULL)
+        	{
+        		printf("%d -> ",head->data);
+        		head = head->next;
+
+        	}
+        	printf("\n");
+        }
+
+        int  main()
+        {
+        	struct node *head,*a;
+        	a = (struct node *)malloc(sizeof(struct node));
+        	a->data = 1;
+        	a->next = NULL;
+        	head = a;
+        	addatend(head,2);
+        	addatend(head,3);
+        	addatbegin(&head,0);
+        	//deleteatbeg(&head);
+        	deleteatmid(head,2);
+        	print(head);
+        	return 0;
+        }
+        </pre></code>
+
+        <!-- IDE ======================================================================================================== -->
+        <script>
+            SEC_HTTPS = true;
+            SEC_BASE = "compilers.widgets.sphere-engine.com";
+            (function(d, s, id){ SEC = window.SEC || (window.SEC = []);
+              var js, fjs = d.getElementsByTagName(s)[0];
+              if (d.getElementById(id)) return; js = d.createElement(s); js.id = id;
+              js.src = (SEC_HTTPS ? "https" : "http") + "://" + SEC_BASE + "/static/sdk/sdk.js";
+              fjs.parentNode.insertBefore(js, fjs);
+            }(document, "script", "sphere-engine-compilers-jssdk"));
+            SEC.ready=function(e){"loading"!=document.readyState&&"interactive"!=document.readyState?e():window.addEventListener("load",e)};
+        </script>
+
+        <a data-title="Awesome Button" onclick="runIDE();" class="runIDE" >Run On IDE</a>
+        <style>
+            .runIDE{
+                background: linear-gradient(135deg, #6e8efb, #a777e3);
+                border-radius: 4px;
+                display: inline-block;
+                padding: 1em 5em;
+                cursor: pointer;
+                user-select: none;
+                color: white;
+                font-family: "Comic Sans MS", cursive, sans-serif;
+            }
+        </style>
+
+        <div style="height: 500px; width: 60em; display: none;" id="runIde">
+            <div data-id="sec-widget" data-widget="1ff6ad793b52a617ca440adb76c34533"></div>
+            <script>
+                SEC.ready(function() {
+                    var sourceCode = document.getElementById("code").innerText;
+                    var SECWidget = SEC.widget("sec-widget");
+                    SECWidget.loadCode(11, sourceCode, "");
+                });
+            </script>
+        </div>
+        <script>
+            function runIDE(){
+                var x = document.getElementById("runIde");
+                if (x.style.display === "none") {
+                    x.style.display = "block";
+                } else {
+                    x.style.display = "none";
+                }
+            }
+        </script>
+        <!-- IDE =================================================================================================== -->
+
+    </div>
+
+</body>
+
+<script>hljs.initHighlightingOnLoad();</script>
+
+</html>

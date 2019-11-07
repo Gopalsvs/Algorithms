@@ -1,0 +1,126 @@
+.hover:hover{
+    box-shadow: 0 2px 4px rgba(43, 43, 43, 0.63);
+    cursor: pointer;
+}
+
+.carousel-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+    /* background-color: green; */
+    height: 100%;
+    /* max-width: 70%;  */
+}
+
+.carousel-title{
+    font-size: 3rem;
+    color: white;
+    align-self: center;
+    padding:1rem;
+    text-align: center;
+    /* background: red; */
+}
+.carousel-cell {
+    width: 100%; /* full width */
+    height: 400px; /* height of carousel */
+    background: rgb(91, 91, 252);
+    justify-content: center;
+}
+
+  .bar{
+    border-radius: 10px;
+    min-height: 100px;
+    /* background-color: green; */
+    margin:20px;
+    padding:15px;
+    color: black;
+    transition:0.4s;
+    border: 2px solid rgb(182, 182, 182);
+    cursor: pointer;
+}
+
+.bar:hover{
+    transform: scale(1.005);
+    box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.37);
+}
+
+.bar-title{
+    font-size: 1.5rem;
+    font-weight: bold;
+    /* background-color: red; */
+    /* display: inline;? */
+}
+
+.page-title{
+    text-align: center;
+    margin: 4rem 0;
+}
+
+.grids{
+    /* width:80%; */
+    /* background-color: rgb(221, 221, 221); */
+    margin:1rem auto;
+    width: 75%;
+}
+
+@media only screen and (max-width : 700px) {
+    .grids{
+        width:95%;
+    }
+}
+
+.grid-item{
+    background-color: rgb(255, 77, 77);
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.5rem;
+    font-weight: bold;
+    width:200px;
+    height: 200px;
+    margin: 0.15rem;
+    border-radius: 4px;
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+
+.grid-item.ll{
+    background-color: rgb(68, 184, 73);
+    width: 300px;
+    height: 200px;
+    /* width:50%; */
+
+}
+
+.grid-item.qu{
+    width:300px;
+    height: 200px;
+    background-color: blue;
+}
+
+.grid-item.st{
+    width: 300px;
+    background-color: rgb(255, 77, 77);
+}
+
+.grid-item.tr{
+    width: 300px;
+    background-color: rgb(128, 0, 90);
+}
+
+.grid-item.he{
+    width: 300px;
+    background-color: rgb(18, 134, 105);
+}
+
+.grid-item.ht{
+    background-color: rgb(106, 34, 124);
+    width: 300px;
+    height: 200px;
+}
+.hide{
+    display: none;
+}

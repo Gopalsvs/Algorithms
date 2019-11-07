@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Stacks</title>
+    <link rel="shortcut icon" href="http://localhost:4000/assets/logo.ico" />
+    <link rel="stylesheet" href="http://localhost:4000/css/posts.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/vs2015.min.css" >
+    <!-- <link rel="stylesheet" href="/path/to/styles/default.css"> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+
+</head>
+
+
+
+<body>
+        <div class="heading">
+        <span class="title">Stacks</span>
+        <br>
+    </div>
+
+    <div class="content">
+        <h1>What are Stacks ?</h1>
+        <br>
+        <img src="http://localhost:4000/assets/stack.jpg" class="banner">
+
+        <p> A stack is an linear data structure, commonly used in most of the programming languages. It follow a paticular
+            order in which operations are performed. It allows adding and removing elements in a particular order. Every
+            time a element is added it goes on the top of the stack, and only element that can be removed is the element
+            that is at the top of the stack, just like a pile of objects.<br />
+            Most common occurence of stack in programming is during the concept of recursion. Recursion uses stack to store data
+            at every step. Thats why in an unclosed recursion, we get stack overflow error.
+        </p>
+
+        <h1>Features</h1>
+
+        <ul>
+            <li>Stack is ordered list</li>
+            <li>It follows <b>LIFO</b> (Last In First Out) or <b>FILO</b> (First In Last Out) order</li>
+            <li><b>push()</b> function is used to insert a new element in the stack</li>
+            <li><b>pop()</b> fuction is used to remove an element from the stack</li>
+            <li>Both insertion and removal are allowed at only one end of Stack called Top</li>
+            <li>Both insertion and removal are of order O(1) and serching is of order O(n)</li>
+            <li>Stack is said to be overflow state when it is completely full</li>
+        </ul>
+
+        <h1>Implementation</h1>
+
+        <p>
+            Implementation is quite similar to <a href="http://localhost:4000/data-structures/linkedlists">Linked List</a> where
+            when we want to insert an element to stack we insert it at the beginning of the linkedlist and to remove an
+            element from the stack we remove it from the beginning of the linkedlist.
+        </p>
+
+        <!-- <div style="background-color: #333; color: white;"> -->
+        <pre><code style="border-radius: 25px;" id="code">
+
+            //In stacks, we add at the beginning and delete at the beginning
+            #include&lt;stdio.h>
+            #include&lt;stdlib.h>
+            struct node
+            {
+            	int data;
+            	struct node *next;
+            };
+
+            // Adding an element to the stack
+            void Push(struct node **head,int key)
+            {
+            	struct node *temp;
+            	temp = malloc(sizeof(struct node));
+            	temp->data = key;
+            	if((*head) == NULL)
+            		(*head) = temp;
+            	else
+            	{
+            		temp->next = (*head);
+            		(*head) = temp;
+            	}
+            }
+
+            // Deleting an element from the stack
+            void Pop(struct node **head)
+            {
+            	(*head) = (*head)->next;
+            }
+
+            struct node *last(struct node *head)
+            {
+            	while(head->next != NULL)
+            		head = head->next;
+            	return head;
+            }
+
+            void print(struct node *head)
+            {
+                printf("beginning: ");
+            	while(head != NULL)
+            	{
+            		printf("%d -> ",head->data);
+            		head = head->next;
+            	}
+            	printf("Null :end\n");
+            }
+
+            int main()
+            {
+            	struct node *head;
+            	Push(&head,1);
+            	Push(&head,2);
+            	Push(&head,3);
+            	Push(&head,4);
+            	Push(&head,5);
+            	print(head);
+            	Pop(&head);
+            	print(head);
+
+            	return 0;
+            }
+
+        </code></pre>
+
+        <!-- Give refrence of expression evaluation algorithm -->
+
+        <!-- IDE ======================================================================================================== -->
+        <script>
+            SEC_HTTPS = true;
+            SEC_BASE = "compilers.widgets.sphere-engine.com";
+            (function(d, s, id){ SEC = window.SEC || (window.SEC = []);
+              var js, fjs = d.getElementsByTagName(s)[0];
+              if (d.getElementById(id)) return; js = d.createElement(s); js.id = id;
+              js.src = (SEC_HTTPS ? "https" : "http") + "://" + SEC_BASE + "/static/sdk/sdk.js";
+              fjs.parentNode.insertBefore(js, fjs);
+            }(document, "script", "sphere-engine-compilers-jssdk"));
+            SEC.ready=function(e){"loading"!=document.readyState&&"interactive"!=document.readyState?e():window.addEventListener("load",e)};
+        </script>
+
+        <a data-title="Awesome Button" onclick="runIDE();" class="runIDE" >Run On IDE</a>
+        <style>
+            .runIDE{
+                background: linear-gradient(135deg, #6e8efb, #a777e3);
+                border-radius: 4px;
+                display: inline-block;
+                padding: 1em 5em;
+                cursor: pointer;
+                user-select: none;
+                color: white;
+                font-family: "Comic Sans MS", cursive, sans-serif;
+            }
+        </style>
+
+        <div style="height: 500px; width: 60em; display: none;" id="runIde">
+            <div data-id="sec-widget" data-widget="1ff6ad793b52a617ca440adb76c34533"></div>
+            <script>
+                SEC.ready(function() {
+                    var sourceCode = document.getElementById("code").innerText;
+                    var SECWidget = SEC.widget("sec-widget");
+                    SECWidget.loadCode(11, sourceCode, "");
+                });
+            </script>
+        </div>
+        <script>
+            function runIDE(){
+                var x = document.getElementById("runIde");
+                if (x.style.display === "none") {
+                    x.style.display = "block";
+                } else {
+                    x.style.display = "none";
+                }
+            }
+        </script>
+        <!-- IDE =================================================================================================== -->
+
+    </div>
+
+</body>
+
+<script>hljs.initHighlightingOnLoad();</script>
+
+</html>

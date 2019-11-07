@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Queue</title>
+    <link rel="shortcut icon" href="http://localhost:4000/assets/logo.ico" />
+    <link rel="stylesheet" href="http://localhost:4000/css/posts.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/vs2015.min.css" >
+    <!-- <link rel="stylesheet" href="/path/to/styles/default.css"> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+
+</head>
+
+
+
+<body>
+        <div class="heading">
+        <span class="title">Queue</span>
+        <br>
+    </div>
+
+    <div class="content">
+        <h1>What is Queue?</h1>
+        <br>
+        <img src="http://localhost:4000/assets/queue.png" class="banner">
+
+        <p>
+            A queue is an linear data structure, commonly used in most of the programming languages. It follow a paticular
+            order in which operations are performed. It allows adding and removing elements in a particular order. Every
+            time an element is added it goes at the beginning of the queue, and only element that can be removed is the element
+            that is at the end of the queue.<br />
+            Good example of a queue is a queue of customers in a supermarket's billing counter, where the customer
+            that came first are served first.<br />
+            The only difference between <a href="http://localhost:4000/data-structures/stack/">stacks</a> and queues is in removing. In stacks
+            we only remove element that is at the beginning whereas in queues we only remove element that is at the end.
+        </p>
+        <h1>Features</h1>
+
+        <ul>
+            <li>Queue is ordered list</li>
+            <li>It follows <b>FIFO</b> (First In First Out) or <b>LILO</b> (Last In Last Out) order</li>
+            <li><b>enqueue()</b> function is used to insert a new element in the stack</li>
+            <li><b>dequeue()</b> fuction is used to remove an element from the stack</li>
+            <li>Both insertion and removal are of order <b>O(1)</b> and searching is of order <b>O(n)</b></li>
+        </ul>
+
+        <h1>Implementation</h1>
+        <pre><code style="border-radius: 25px;" id="code">
+            //In Queue, you add at the end and delete at the beginning
+            #include< stdio.h>
+            #include< stdlib.h>
+            struct node
+            {
+            	int data;
+            	struct node* next;
+            };
+
+            // Adding an element to the Queue
+            void Enqueue(struct node **head,struct node **tail,int key)
+            {
+            	struct node *temp;
+            	temp = malloc(sizeof(struct node));
+            	temp->data = key;
+            	if((*head) == NULL)
+            	{
+            		(*tail) = temp;
+            		(*head) = temp;
+            	}
+            	else
+            	{
+            		(*tail)->next = temp;
+            		(*tail) = temp;
+            	}
+
+            }
+
+            // Deleting an element from the queue
+            void Dequeue(struct node **head)
+            {
+            	(*head) = (*head)->next;
+            }
+
+            void print(struct node *head)
+            {
+             	while(head != NULL)
+            	{
+            		printf("%d -> ",head->data);
+            		head = head->next;
+
+            	}
+            	printf("\n");
+            }
+
+            int main()
+            {
+            	struct node *head,*tail;
+            	head = NULL;
+            	tail = NULL;
+            	Enqueue(&head,&tail,1);
+            	Enqueue(&head,&tail,2);
+            	Enqueue(&head,&tail,3);
+            	Enqueue(&head,&tail,4);
+            	Enqueue(&head,&tail,5);
+            	print(head);
+            	Dequeue(&head);
+            	print(head);
+
+            	return 0;
+            }
+
+        </pre></code>
+
+        <!-- IDE ======================================================================================================== -->
+        <script>
+            SEC_HTTPS = true;
+            SEC_BASE = "compilers.widgets.sphere-engine.com";
+            (function(d, s, id){ SEC = window.SEC || (window.SEC = []);
+              var js, fjs = d.getElementsByTagName(s)[0];
+              if (d.getElementById(id)) return; js = d.createElement(s); js.id = id;
+              js.src = (SEC_HTTPS ? "https" : "http") + "://" + SEC_BASE + "/static/sdk/sdk.js";
+              fjs.parentNode.insertBefore(js, fjs);
+            }(document, "script", "sphere-engine-compilers-jssdk"));
+            SEC.ready=function(e){"loading"!=document.readyState&&"interactive"!=document.readyState?e():window.addEventListener("load",e)};
+        </script>
+
+        <a data-title="Awesome Button" onclick="runIDE();" class="runIDE" >Run On IDE</a>
+        <style>
+            .runIDE{
+                background: linear-gradient(135deg, #6e8efb, #a777e3);
+                border-radius: 4px;
+                display: inline-block;
+                padding: 1em 5em;
+                cursor: pointer;
+                user-select: none;
+                color: white;
+                font-family: "Comic Sans MS", cursive, sans-serif;
+            }
+        </style>
+
+        <div style="height: 500px; width: 60em; display: none;" id="runIde">
+            <div data-id="sec-widget" data-widget="1ff6ad793b52a617ca440adb76c34533"></div>
+            <script>
+                SEC.ready(function() {
+                    var sourceCode = document.getElementById("code").innerText;
+                    var SECWidget = SEC.widget("sec-widget");
+                    SECWidget.loadCode(11, sourceCode, "");
+                });
+            </script>
+        </div>
+        <script>
+            function runIDE(){
+                var x = document.getElementById("runIde");
+                if (x.style.display === "none") {
+                    x.style.display = "block";
+                } else {
+                    x.style.display = "none";
+                }
+            }
+        </script>
+        <!-- IDE =================================================================================================== -->
+
+        <p>
+            Here there are two pointers, one pointing to the beginning of the queue and another pointing at the end of the
+            queue. Queue can be formed using two stacks. Check it out how <a href="http://localhost:4000/data-structures/queue/queue_using_two_stacks">
+            Queue using two stacks</a>
+        </p>
+
+    </div>
+
+</body>
+
+<script>hljs.initHighlightingOnLoad();</script>
+
+</html>
